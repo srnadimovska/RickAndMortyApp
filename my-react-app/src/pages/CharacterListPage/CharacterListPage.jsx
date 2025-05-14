@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import SearchComponent from "../../components/SearchComponent/SearchComponent"
 import { searchCharacter} from "../../actions/characterSearchActions"
-
+import "./CharacterListPage.css"
 const CharacterListPage = () => {
     const dispatch = useDispatch()
     const [searchTerm, setSearchTerm] = useState("")
@@ -24,12 +24,20 @@ const CharacterListPage = () => {
 useEffect(() => {
     dispatch(fetchCharacter())
 },[dispatch])
+const handleAddToFavorites = (character) => {
+  const stored = JSON.parse(localStorage.getItem("favorites")) || [];
+  const exists = stored.find((fav) => fav.id === character.id);
+  if (!exists) {
+    const updated = [...stored, character];
+    localStorage.setItem("favorites", JSON.stringify(updated));
+  }
+}
 
 const characterToShow = searchTerm ? searchResults : characters;
 
 return (
     
-    <div>
+    <div lassName="character-list-container">
         <SearchComponent 
         searchTerm={searchTerm} 
         onSearchTerm={handleSearchTerm} />
@@ -37,19 +45,19 @@ return (
 
         {loadingCharacters && <p>Loading characters</p>}
         {error && <p>Error:{error}</p>}
-        <div>
+        <div className="character-grid">
         {characterToShow.map((char) => (
-          <Link
-            to={`/character/${char.id}`}
-            className="character-card"
-            key={char.id}
-          >
-            <img src={char.image} alt={char.name} />
-            <h3>{char.name}</h3>
-            <p>{char.species}</p>
-          </Link>
-        ))}
+  <div className="character-card" key={char.id}>
+    <Link to={`/character/${char.id}`}>
+      <img src={char.image} alt={char.name} />
+      <p>{char.species}</p>
+      <h3>{char.name}</h3>
+    </Link>
+    <button onClick={() => handleAddToFavorites(char)}>Add to Favorite</button>
+  </div>
+))}
         </div>
+        
     </div>
 )
 }

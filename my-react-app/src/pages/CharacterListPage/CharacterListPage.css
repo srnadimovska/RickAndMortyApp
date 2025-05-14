@@ -1,0 +1,49 @@
+.character-list-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .character-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 15px;
+  }
+  
+  .character-card {
+    background: #e8cbcb;
+    border-radius: 12px;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .character-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .character-card img {
+    width: fit-content;
+    border-radius: 8px;
+  }
+  
+  .character-card h3 {
+    
+    font-size: 20px;
+  }
+  
+  .character-card p {
+    margin: 0;
+    font-size: 15px;
+    color: #666;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 300px;
+  }
